@@ -1,104 +1,73 @@
-$graphics: #7ed6df;
-$webdev: #f6e58d;
-$ai: #fd79a8;
-$robotics: #b2bec3;
+// Dark mode by default, light mode for browsers that prefer it
+:root {
+  --bg-primary: #000000;
+  --bg-card: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --border-color: #333333;
+}
 
-$bg-dark: #23272f;
-$card-bg: #2d3436;
-$text-light: #fff;
-$text-dark: #222;
-$shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-card: #f8f9fa;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --border-color: #e9ecef;
+  }
+}
 
-body {
-  background: $bg-dark;
-  color: $text-light;
-  font-family: 'Segoe UI', Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
 #app {
-  max-width: 700px;
-  margin: 2rem auto;
-  background: $card-bg;
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  box-shadow: $shadow;
-}
-
-.branch-card {
-  margin: 1.5rem 0;
-  padding: 1.5rem 1.2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.07);
-  transition: transform 0.15s;
+  min-height: 100vh;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8em;
-
-  &:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 8px 32px rgba(0,0,0,.12);
-  }
-
-  .branch-title {
-    font-size: 1.35em;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.2em;
-  }
-
-  .level {
-    font-size: 1em;
-    margin-bottom: 0.3em;
-    opacity: 0.8;
-  }
-
-  .progress-bar {
-    background: #444;
-    border-radius: 8px;
-    overflow: hidden;
-    height: 18px;
-    margin-bottom: 0.5em;
-    position: relative;
-
-    .progress-inner {
-      height: 100%;
-      transition: width 0.4s;
-      background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
-      box-shadow: 0 0 8px rgba(0,0,0,0.08);
-    }
-  }
-
-  &.graphics {
-    background: $graphics;
-    color: $text-dark;
-    border-left: 6px solid darken($graphics, 12%);
-  }
-  &.webdev {
-    background: $webdev;
-    color: $text-dark;
-    border-left: 6px solid darken($webdev, 12%);
-  }
-  &.ai {
-    background: $ai;
-    color: $text-dark;
-    border-left: 6px solid darken($ai, 12%);
-  }
-  &.robotics {
-    background: $robotics;
-    color: $text-dark;
-    border-left: 6px solid darken($robotics, 12%);
-  }
+  align-items: center;
 }
 
-// Responsive tweaks
-@media (max-width: 800px) {
+h1 {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.branches-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+}
+
+// Mobile: stack vertically
+@media (max-width: 768px) {
+  .branches-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
   #app {
-    max-width: 95vw;
     padding: 1rem;
   }
-  .branch-card {
-    padding: 1rem 0.7rem;
+  
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
 }

@@ -1,35 +1,20 @@
-import { branches, skills, perks } from '../data';
+import React from 'react';
+import { branches, skills, categories } from '../data';
+import { BranchCard } from './BranchCard';
 
 const MainPage = () => (
     <div id="app">
-        <h1>Progress Tracker MVP</h1>
-        <h2>Branches</h2>
-        <ul>
-            {branches.map(b => (
-                <li key={b.id} style={{ color: b.color }}>
-                    {b.name} - {b.description}
-                </li>
+        <h1>Progress Tracker</h1>
+        <div className="branches-container">
+            {branches.map(branch => (
+                <BranchCard
+                    key={branch.id}
+                    branch={branch}
+                    skills={skills}
+                    categories={categories}
+                />
             ))}
-        </ul>
-        <h2>Skills</h2>
-        <ul>
-            {skills.map(s => {
-                const branch = branches.find(b => b.id === s.branchId);
-                return (
-                    <li key={s.id}>
-                        {s.name} ({branch ? branch.name : s.branchId})
-                    </li>
-                );
-            })}
-        </ul>
-        <h2>Perks</h2>
-        <ul>
-            {perks.map(p => (
-                <li key={p.id}>
-                    {p.name}: {p.description}
-                </li>
-            ))}
-        </ul>
+        </div>
     </div>
 );
 

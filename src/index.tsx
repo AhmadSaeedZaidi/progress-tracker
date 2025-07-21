@@ -1,7 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import MainPage from './components/MainPage';
-import './styles.scss';
+import './styles/main.scss';
+import './styles/branch-card.scss';
 
 const container = document.getElementById('root');
 if (container) {

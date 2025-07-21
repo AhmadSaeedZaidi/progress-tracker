@@ -1,6 +1,13 @@
-import type { branches } from "./branches";
-import type { skills } from "./skills";
-import type { perks } from "./perks";
-import type { categories } from "./categories";
+import { rawBranches } from "./branches";
+import { skills } from "./skills";
+import { perks } from "./perks";
+import { categories } from "./categories";
+import type { Branch } from "../models/Branch";
 
-export { branches, skills, perks, categories };
+// Attach skillIds to each branch
+export const branches: Branch[] = rawBranches.map(branch => ({
+    ...branch,
+    skillIds: skills.filter(s => s.branchId === branch.id).map(s => s.id),
+}));
+
+export { skills, perks, categories };

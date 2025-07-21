@@ -1,5 +1,5 @@
 import React from "react";
-import type { branches, skills, Category, Perk } from "../data";
+import type { Branch, Skill, Category } from "../models";
 
 interface Props {
   branch: Branch;
@@ -9,6 +9,7 @@ interface Props {
 
 export function BranchCard({ branch, skills, categories }: Props) {
   const branchSkills = skills.filter(skill => branch.skillIds.includes(skill.id));
+
   return (
     <div className="branch-card" style={{ borderColor: branch.color }}>
       <div className="branch-header" style={{ background: branch.color }}>
@@ -22,17 +23,15 @@ export function BranchCard({ branch, skills, categories }: Props) {
             <div className={`skill-card${skill.unlocked ? " unlocked" : ""}`} key={skill.id}>
               <div className="skill-name">{skill.name}</div>
               <div className="skill-meta">
-                <span>Level {skill.level}</span>
-                <span>XP: {skill.experience}{skill.goal ? `/${skill.goal}` : ""}</span>
+                <span>Level {skill.level || 0}</span>
+                <span>XP: {skill.experience || 0}{skill.goal ? `/${skill.goal}` : ""}</span>
               </div>
-              <div className="skill-category">
-                {category ? (
-                  <>
-                    {category.icon && <span className="category-icon">{category.icon}</span>}
-                    <span className="category-name">{category.name}</span>
-                  </>
-                ) : null}
-              </div>
+              {category && (
+                <div className="skill-category">
+                  {category.icon && <span className="category-icon">{category.icon}</span>}
+                  <span className="category-name">{category.name}</span>
+                </div>
+              )}
               {skill.perks && skill.perks.length > 0 && (
                 <div className="skill-perks">
                   <b>Perks:</b>
@@ -40,7 +39,7 @@ export function BranchCard({ branch, skills, categories }: Props) {
                     {skill.perks.map(perk => (
                       <li key={perk.id} className={perk.unlocked ? "perk-unlocked" : "perk-locked"}>
                         {perk.name}
-                        {perk.unlocked && perk.dateUnlocked ? <span> (Unlocked: {perk.dateUnlocked})</span> : ""}
+                        {perk.unlocked && perk.dateUnlocked && <span> (Unlocked: {perk.dateUnlocked})</span>}
                       </li>
                     ))}
                   </ul>
