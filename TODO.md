@@ -1,2 +1,2 @@
--Use Github Rest API (whatever that is) for LEDGER PAGE
+-Use GitHub Rest API (whatever that is) for LEDGER PAGE
 -make a ledger page
