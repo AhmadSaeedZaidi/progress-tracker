@@ -2,6 +2,6 @@ export interface Perk {
   id: string;
   name: string;
   description?: string;
-  unlocked: boolean;
+  unlocked?: boolean;
   dateUnlocked?: string;
 }

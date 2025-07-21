@@ -1,0 +1,38 @@
+.branch-card {
+  border: 3px solid;
+  border-radius: 16px;
+  margin: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  background: #222e;
+  color: #fff;
+  max-width: 400px;
+  overflow: hidden;
+  .branch-header {
+    padding: 1rem;
+    border-bottom: 1px solid #fff3;
+    h2 { margin: 0; font-size: 1.5rem; }
+    p { margin-top: 0.5rem; font-size: 1rem; opacity: 0.9; }
+  }
+  .branch-skills {
+    padding: 1rem;
+    .skill-card {
+      background: #333c;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      padding: 0.7rem;
+      box-shadow: 0 2px 8px #0002;
+      &.unlocked { border: 2px solid #7fff7f; }
+      .skill-name { font-weight: bold; font-size: 1.1rem; }
+      .skill-meta { font-size: 0.95rem; color: #fff9; display: flex; gap: 1rem; }
+      .skill-category { font-size: 0.9rem; color: #ffd700; display: flex; align-items: center; gap: 0.3rem; }
+      .skill-perks { font-size: 0.9rem;
+        ul { margin: 0.3rem 0 0 1rem; }
+        .perk-unlocked { color: #7fff7f; }
+        .perk-locked { color: #ff7f7f; }
+      }
+      .skill-status { margin-top: 0.3rem; font-weight: bold; }
+      .unlocked { color: #7fff7f; }
+      .locked { color: #ff7f7f; }
+    }
+  }
+}
