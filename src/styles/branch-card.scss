@@ -161,22 +161,22 @@
 }
 
 // Branch-specific accent colors
-.branch-card[style*="#4CAF50"] {
+.branch-card--green {
     --branch-color: #4CAF50;
 }
 
-.branch-card[style*="#2196F3"] {
+.branch-card--blue {
     --branch-color: #2196F3;
 }
 
-.branch-card[style*="#FF9800"] {
+.branch-card--orange {
     --branch-color: #FF9800;
 }
 
-.branch-card[style*="#9C27B0"] {
+.branch-card--purple {
     --branch-color: #9C27B0;
 }
 
-.branch-card[style*="#F44336"] {
+.branch-card--red {
     --branch-color: #F44336;
 }
