@@ -1,9 +1,10 @@
 import type { Branch } from "../models/Branch";
 
 export const rawBranches: Omit<Branch, "skillIds">[] = [
-  { id: 'web-dev', name: 'Web Development', description: 'HTML, CSS, JS frameworks', color: '#4CAF50' },
-  { id: 'graphics', name: 'Graphics', description: 'WebGL, Three.js, shaders', color: '#2196F3' },
-  { id: 'rl', name: 'Reinforcement Learning', description: 'RL algorithms, environments', color: '#FF9800' },
-  { id: 'writing', name: 'Research Writing', description: 'Academic writing, citations', color: '#9C27B0' },
-  { id: 'sim-robotics', name: 'Simulation & Robotics', description: 'Physics engines, real-world modeling', color: '#F44336' },
+  { id: 'robotics', name: 'Robotics & ROS2', description: 'ROS2, robotics systems, estimation', color: '#F44336' },
+  { id: 'graphics-cv', name: 'Graphics & Computer Vision', description: 'OpenGL, OpenCV, OpenCL', color: '#2196F3' },
+  { id: 'python-dev', name: 'Python Development', description: 'Flask, TensorFlow, data science', color: '#4CAF50' },
+  { id: 'systems', name: 'Systems & Tools', description: 'CMake, testing, protocols', color: '#FF9800' },
+  { id: 'mathematics', name: 'Mathematics', description: 'Linear Algebra, Statistics, Calculus', color: '#9C27B0' },
+  { id: 'research', name: 'Research & ML', description: 'Research experience, RL, academic work', color: '#795548' },
 ];
