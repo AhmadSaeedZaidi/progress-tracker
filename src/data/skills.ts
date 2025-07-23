@@ -12,7 +12,7 @@ export const skills: Skill[] = [
   // Graphics & Computer Vision Branch  
   {
     id: 'opengl', name: 'OpenGL', branchId: 'graphics-cv', experience: 300, level: 3, goal: 500, unlocked: true, categoryId: 'graphics',
-    perks: [{ id: 'game-dev', name: '3D Game Developer', description: 'Created 3D Brickbreaker game', unlocked: true, dateUnlocked: '2024-03-15' }]
+    perks: [{ id: 'game-dev', name: '3D Game Developer', description: 'Created 3D Brickbreaker game', unlocked: true, dateUnlocked: '2025-06-20' }]
   },
   { id: 'opencv-basics', name: 'OpenCV Basics', branchId: 'graphics-cv', experience: 50, level: 1, goal: 200, unlocked: true, categoryId: 'cv' },
   { id: 'opencl', name: 'OpenCL', branchId: 'graphics-cv', experience: 30, level: 0, goal: 150, unlocked: true, categoryId: 'systems' },
@@ -45,7 +45,7 @@ export const skills: Skill[] = [
   // Research & ML Branch
   {
     id: 'research-application', name: 'Research Application', branchId: 'research', experience: 50, level: 1, goal: 100, unlocked: true, categoryId: 'research',
-    perks: [{ id: 'urogiki-applicant', name: 'Urogiki Applicant', description: 'Applied to research group!', unlocked: true, dateUnlocked: '2025-01-15' }]
+    perks: [{ id: 'urogiki-applicant', name: 'Urogiki Applicant', description: 'Applied to research group!', unlocked: true, dateUnlocked: '2025-07-23' }]
   },
   { id: 'reinforcement-learning', name: 'Reinforcement Learning', branchId: 'research', experience: 0, level: 0, goal: 300, unlocked: false, categoryId: 'ml' },
   { id: 'research-methods', name: 'Research Methodology', branchId: 'research', experience: 0, level: 0, goal: 250, unlocked: false, categoryId: 'research' },
