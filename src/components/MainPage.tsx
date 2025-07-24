@@ -9,8 +9,8 @@ const MainPage = () => {
 
     useEffect(() => {
         const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '50px 0px 50px 0px'
+            threshold: 0.1,
+            rootMargin: '100px 0px 100px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -32,15 +32,37 @@ const MainPage = () => {
             });
         }, observerOptions);
 
-        if (containerRef.current) {
-            const sections = containerRef.current.querySelectorAll('.section');
-            const cards = containerRef.current.querySelectorAll('.branch-card, .achievement-card');
-            
-            [...sections, ...cards].forEach((element) => observer.observe(element));
-        }
+        const setupObserver = () => {
+            if (containerRef.current) {
+                // Query for all elements that need animation
+                const sections = containerRef.current.querySelectorAll('.section');
+                const branchCards = containerRef.current.querySelectorAll('.branch-card');
+                const achievementCards = containerRef.current.querySelectorAll('.achievement-card');
+                
+                // Log for debugging
+                console.log(`Setting up observer for: ${sections.length} sections, ${branchCards.length} branch cards, ${achievementCards.length} achievement cards`);
+                
+                [...sections, ...branchCards, ...achievementCards].forEach((element) => {
+                    observer.observe(element);
+                });
+            }
+        };
 
-        return () => observer.disconnect();
-    }, []);
+        // Set up observer with multiple attempts to catch all elements
+        setupObserver();
+        
+        // Retry after short delays to catch any late-rendered elements
+        const timeouts = [
+            setTimeout(setupObserver, 100),
+            setTimeout(setupObserver, 500),
+            setTimeout(setupObserver, 1000)
+        ];
+
+        return () => {
+            timeouts.forEach(timeout => clearTimeout(timeout));
+            observer.disconnect();
+        };
+    }, [branches.length, skills.length]); // Add dependencies to re-run when data changes
 
     return (
         <div className="void-container" ref={containerRef}>

@@ -80,7 +80,7 @@ export function Achievements({ skills, perks }: Props) {
         {displayAchievements.map((achievement, index) => (
           <div
             key={achievement.id}
-            className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'} visible`}
+            className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}`}
             style={{
               animationDelay: `${index * 0.1}s`
             }}

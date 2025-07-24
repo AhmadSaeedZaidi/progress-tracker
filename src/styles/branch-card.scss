@@ -7,6 +7,7 @@
     position: relative;
     display: flex;
     min-height: 200px;
+    opacity: 1; /* Default visible state - void animation will override if needed */
     
     // Subtle glow effect
     &::before {
