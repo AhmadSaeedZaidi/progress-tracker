@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Skill, Achievement, Perk } from '../models';
 import { achievements as baseAchievements } from '../data';
 
@@ -66,6 +66,13 @@ export function Achievements({ skills, perks }: Props) {
   const achievements = calculateAchievements();
   const unlockedAchievements = achievements.filter(a => a.unlocked);
   const displayAchievements = showAll ? achievements : achievements.slice(0, 4);
+
+  // Notify parent when achievement cards change so intersection observer can re-observe
+  useEffect(() => {
+    // Dispatch a custom event when achievements change
+    const event = new CustomEvent('achievementsChanged');
+    window.dispatchEvent(event);
+  }, [showAll, displayAchievements.length]);
 
   return (
     <div className="achievements">

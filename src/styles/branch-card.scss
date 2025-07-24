@@ -7,7 +7,10 @@
     position: relative;
     display: flex;
     min-height: 200px;
-    opacity: 1; /* Default visible state - void animation will override if needed */
+    
+    // Fallback: ensure cards are visible even if void animation fails
+    // The main.scss void animation will override this with opacity: 0 initially
+    opacity: 1;
     
     // Subtle glow effect
     &::before {
