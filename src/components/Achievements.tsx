@@ -1,95 +1,66 @@
 import React, { useState } from 'react';
-import type { Skill } from '../models';
-
-interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  unlocked: boolean;
-  progress?: number;
-  maxProgress?: number;
-}
+import type { Skill, Achievement, Perk } from '../models';
+import { achievements as baseAchievements } from '../data';
 
 interface Props {
   skills: Skill[];
+  perks: Perk[];
 }
 
-export function Achievements({ skills }: Props) {
+export function Achievements({ skills, perks }: Props) {
   const [showAll, setShowAll] = useState(false);
-  
+
   // Calculate achievements based on skills
   const calculateAchievements = (): Achievement[] => {
     const totalXP = skills.reduce((sum, skill) => sum + (skill.experience || 0), 0);
     const unlockedSkills = skills.filter(skill => skill.unlocked).length;
     const maxLevelSkill = skills.reduce((max, skill) => (skill.level || 0) > max ? (skill.level || 0) : max, 0);
-    const skillsWithPerks = skills.filter(skill => skill.perks && skill.perks.length > 0).length;
-    
-    return [
-      {
-        id: 'first-steps',
-        name: 'First Steps',
-        description: 'Unlock your first skill',
-        icon: '🚀',
-        unlocked: unlockedSkills >= 1,
-        progress: Math.min(unlockedSkills, 1),
-        maxProgress: 1
-      },
-      {
-        id: 'xp-hunter',
-        name: 'XP Hunter',
-        description: 'Accumulate 500 total experience points',
-        icon: '⚡',
-        unlocked: totalXP >= 500,
-        progress: Math.min(totalXP, 500),
-        maxProgress: 500
-      },
-      {
-        id: 'skill-collector',
-        name: 'Skill Collector',
-        description: 'Unlock 5 different skills',
-        icon: '🎯',
-        unlocked: unlockedSkills >= 5,
-        progress: Math.min(unlockedSkills, 5),
-        maxProgress: 5
-      },
-      {
-        id: 'level-master',
-        name: 'Level Master',
-        description: 'Reach level 5 in any skill',
-        icon: '👑',
-        unlocked: maxLevelSkill >= 5,
-        progress: Math.min(maxLevelSkill, 5),
-        maxProgress: 5
-      },
-      {
-        id: 'perk-seeker',
-        name: 'Perk Seeker',
-        description: 'Unlock skills with perks',
-        icon: '💎',
-        unlocked: skillsWithPerks >= 1,
-        progress: Math.min(skillsWithPerks, 1),
-        maxProgress: 1
-      },
-      {
-        id: 'dedication',
-        name: 'Dedication',
-        description: 'Accumulate 1000 total experience points',
-        icon: '🔥',
-        unlocked: totalXP >= 1000,
-        progress: Math.min(totalXP, 1000),
-        maxProgress: 1000
-      },
-      {
-        id: 'completionist',
-        name: 'Completionist',
-        description: 'Unlock all available skills',
-        icon: '🌟',
-        unlocked: unlockedSkills >= skills.length && skills.length > 0,
-        progress: unlockedSkills,
-        maxProgress: skills.length
+    const skillsWithPerks = skills.filter(skill => skill.perkIds && skill.perkIds.length > 0).length;
+
+    return baseAchievements.map(achievement => {
+      let progress = 0;
+      let unlocked = false;
+      let maxProgress = achievement.maxProgress || 0;
+
+      switch (achievement.id) {
+        case 'first-steps':
+          progress = Math.min(unlockedSkills, 1);
+          unlocked = unlockedSkills >= 1;
+          break;
+        case 'xp-hunter':
+          progress = Math.min(totalXP, 1000);
+          unlocked = totalXP >= 1000;
+          break;
+        case 'skill-collector':
+          progress = Math.min(unlockedSkills, 25);
+          unlocked = unlockedSkills >= 25;
+          break;
+        case 'level-master':
+          progress = Math.min(maxLevelSkill, 5);
+          unlocked = maxLevelSkill >= 5;
+          break;
+        case 'perk-seeker':
+          progress = Math.min(skillsWithPerks, 1);
+          unlocked = skillsWithPerks >= 1;
+          break;
+        case 'dedication':
+          progress = Math.min(totalXP, 2500);
+          unlocked = totalXP >= 2500;
+          break;
+        case 'completionist':
+          maxProgress = skills.length;
+          progress = unlockedSkills;
+          unlocked = unlockedSkills >= skills.length && skills.length > 0;
+          break;
       }
-    ];
+
+      return {
+        ...achievement,
+        unlocked,
+        progress,
+        maxProgress
+      };
+    });
   };
 
   const achievements = calculateAchievements();
@@ -104,12 +75,15 @@ export function Achievements({ skills }: Props) {
           {unlockedAchievements.length}/{achievements.length}
         </span>
       </div>
-      
+
       <div className="achievements-grid">
-        {displayAchievements.map(achievement => (
-          <div 
-            key={achievement.id} 
-            className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}`}
+        {displayAchievements.map((achievement, index) => (
+          <div
+            key={achievement.id}
+            className={`achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'} visible`}
+            style={{
+              animationDelay: `${index * 0.1}s`
+            }}
           >
             <div className="achievement-icon">
               {achievement.unlocked ? achievement.icon : '🔒'}
@@ -119,15 +93,15 @@ export function Achievements({ skills }: Props) {
                 {achievement.unlocked ? achievement.name : '???'}
               </div>
               <div className="achievement-description">
-                {achievement.unlocked ? achievement.description : 'Keep progressing to unlock!'}
+                {achievement.unlocked ? achievement.description : 'Keep progressing to unlock this achievement!'}
               </div>
               {achievement.maxProgress && achievement.maxProgress > 1 && (
                 <div className="achievement-progress">
                   <div className="achievement-progress-bar">
-                    <div 
+                    <div
                       className="achievement-progress-fill"
-                      style={{ 
-                        width: `${((achievement.progress || 0) / achievement.maxProgress) * 100}%` 
+                      style={{
+                        width: `${((achievement.progress || 0) / achievement.maxProgress) * 100}%`
                       }}
                     />
                   </div>
@@ -143,9 +117,9 @@ export function Achievements({ skills }: Props) {
           </div>
         ))}
       </div>
-      
+
       {achievements.length > 4 && (
-        <button 
+        <button
           className="show-more-btn"
           onClick={() => setShowAll(!showAll)}
         >

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { branches, skills, categories } from '../data';
+import { branches, skills, categories, perks } from '../data';
 import { BranchCard } from './BranchCard';
 import { StatsOverview } from './StatsOverview';
 import { Achievements } from './Achievements';
@@ -63,7 +63,7 @@ const MainPage = () => {
                 </section>
 
                 <section className="section achievements-section">
-                    <Achievements skills={skills} />
+                    <Achievements skills={skills} perks={perks} />
                 </section>
 
                 <section className="section branches-section">
@@ -74,6 +74,7 @@ const MainPage = () => {
                                 branch={branch}
                                 skills={skills}
                                 categories={categories}
+                                perks={perks}
                             />
                         ))}
                     </div>

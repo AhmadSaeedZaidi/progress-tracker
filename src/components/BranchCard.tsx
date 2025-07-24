@@ -1,19 +1,26 @@
 import React from "react";
-import type { Branch, Skill, Category } from "../models";
+import type { Branch, Skill, Category, Perk } from "../models";
 
 interface Props {
   branch: Branch;
   skills: Skill[];
   categories: Category[];
+  perks: Perk[];
 }
 
-export function BranchCard({ branch, skills, categories }: Props) {
+export function BranchCard({ branch, skills, categories, perks }: Props) {
   const branchSkills = skills.filter(skill => branch.skillIds.includes(skill.id));
   
   // Calculate progress width for each skill
   const calculateProgress = (skill: Skill) => {
     if (!skill.goal || skill.goal === 0) return 0;
     return Math.min((skill.experience || 0) / skill.goal * 100, 100);
+  };
+  
+  // Get perks for a skill
+  const getSkillPerks = (skill: Skill) => {
+    if (!skill.perkIds) return [];
+    return skill.perkIds.map(perkId => perks.find(p => p.id === perkId)).filter(Boolean) as Perk[];
   };
   
   // Convert color to RGB values for CSS custom properties
@@ -41,6 +48,7 @@ export function BranchCard({ branch, skills, categories }: Props) {
         {branchSkills.map(skill => {
           const category = categories.find(c => c.id === skill.categoryId);
           const progressWidth = calculateProgress(skill);
+          const skillPerks = getSkillPerks(skill);
           
           return (
             <div 
@@ -67,11 +75,11 @@ export function BranchCard({ branch, skills, categories }: Props) {
                   <span className="category-name">{category.name}</span>
                 </div>
               )}
-              {skill.perks && skill.perks.length > 0 && (
+              {skillPerks.length > 0 && (
                 <div className="skill-perks">
                   <b>Perks:</b>
                   <ul>
-                    {skill.perks.map(perk => (
+                    {skillPerks.map(perk => (
                       <li key={perk.id} className={perk.unlocked ? "perk-unlocked" : "perk-locked"}>
                         {perk.name}
                         {perk.unlocked && perk.dateUnlocked && <span> (Unlocked: {perk.dateUnlocked})</span>}
