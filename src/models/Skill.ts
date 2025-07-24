@@ -1,5 +1,3 @@
-import type { Perk } from "./Perk";
-
 export interface Skill {
   id: string;
   name: string;
@@ -9,7 +7,7 @@ export interface Skill {
   level?: number;
   experience?: number;
   goal?: number;
-  perks?: Perk[];
+  perkIds?: string[]; // Reference to perk IDs instead of embedded perks
   unlocked?: boolean;
   dateUnlocked?: string;
 }
