@@ -164,23 +164,6 @@ h1 {
   gap: 1rem;
   width: 100%;
   max-width: 1600px;
-  
-  .branch-card {
-    opacity: 0;
-    transform: translateY(40px) scale(0.98);
-    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    
-    &.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    
-    &.void-exit {
-      opacity: 0;
-      transform: translateY(-40px) scale(0.98);
-      transition: all 0.6s cubic-bezier(0.55, 0.06, 0.68, 0.19);
-    }
-  }
 }
 
 @keyframes fadeInUp {
@@ -188,6 +171,43 @@ h1 {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+// ===== VOID ANIMATION SYSTEM =====
+// Consolidated void animation styles for all elements
+// This system ensures consistent behavior across all animated elements
+
+// Base void animation for individual cards (branch cards, achievement cards)
+.void-container .branch-card,
+.void-container .achievement-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  &.visible {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+  }
+  
+  &.void-exit {
+    opacity: 0 !important;
+    transform: translateY(-40px) scale(0.98) !important;
+    transition: all 0.6s cubic-bezier(0.55, 0.06, 0.68, 0.19) !important;
+  }
+}
+
+// Override any conflicting styles in achievement cards
+.void-container .achievement-card.visible {
+  opacity: 1 !important;
+}
+
+// Ensure branch cards are visible by default when not in void container
+.branch-card:not(.void-container .branch-card) {
+  opacity: 1;
+}
+
+.achievement-card:not(.void-container .achievement-card) {
+  opacity: 1;
 }
 
 // Mobile: adjust sections and cards
