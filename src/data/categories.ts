@@ -11,4 +11,10 @@ export const categories: Category[] = [
   { id: 'math', name: 'Mathematics', icon: '📐' },
   { id: 'research', name: 'Research', icon: '🔬' },
   { id: 'communication', name: 'Communication', icon: '📡' },
+  { id: 'cpp', name: 'C++ Programming', icon: '💻' },
+  { id: 'embedded', name: 'Embedded Systems', icon: '🔌' },
+  { id: 'gui', name: 'GUI Development', icon: '🖼️' },
+  { id: 'algorithms', name: 'Algorithms', icon: '🧮' },
+  { id: 'ai', name: 'Artificial Intelligence', icon: '🤖' },
+  { id: 'documentation', name: 'Documentation', icon: '📝' },
 ];
