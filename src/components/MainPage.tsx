@@ -34,6 +34,9 @@ const MainPage = () => {
 
         const setupObserver = () => {
             if (containerRef.current) {
+                // Disconnect existing observations first
+                observer.disconnect();
+                
                 // Query for all elements that need animation
                 const sections = containerRef.current.querySelectorAll('.section');
                 const branchCards = containerRef.current.querySelectorAll('.branch-card');
@@ -52,14 +55,24 @@ const MainPage = () => {
         setupObserver();
         
         // Retry after short delays to catch any late-rendered elements
+        // Increased timeouts for more robust element detection
         const timeouts = [
             setTimeout(setupObserver, 100),
+            setTimeout(setupObserver, 300),
             setTimeout(setupObserver, 500),
             setTimeout(setupObserver, 1000)
         ];
 
+        // Listen for changes in achievements to re-observe new cards
+        const handleAchievementsChanged = () => {
+            setTimeout(setupObserver, 50); // Small delay to ensure DOM is updated
+        };
+        
+        window.addEventListener('achievementsChanged', handleAchievementsChanged);
+
         return () => {
             timeouts.forEach(timeout => clearTimeout(timeout));
+            window.removeEventListener('achievementsChanged', handleAchievementsChanged);
             observer.disconnect();
         };
     }, [branches.length, skills.length]); // Add dependencies to re-run when data changes
